@@ -95,6 +95,10 @@ endif
 
 MYCXXFLAGS=-std=c++11 $(IDIRS) $(OPTZ) $(DEBUG) $(PSQLCH) -DGITVERSION=\"$(GIT_VERSION)\"
 
+<<<<<<< HEAD
+=======
+MYCXXFLAGS=-std=c++11 $(IDIRS) $(OPTZ) $(DEBUG)
+>>>>>>> origin/master
 LDFLAGS+=
 NOJEMALLOC := $(shell echo $(NOJEMALLOC))
 ifeq ($(NOJEMALLOC),1)
@@ -137,11 +141,15 @@ $(ODIR)/%.o: %.cpp
 	$(CXX) -c -o $@ $< $(MYCXXFLAGS) $(CXXFLAGS) -Wall
 
 proxysql: $(ODIR) $(OBJ) $(LIBPROXYSQLAR)
+<<<<<<< HEAD
 ifeq ($(PROXYSQLCLICKHOUSE),1)
 	$(CXX) -o $@ $(OBJ) $(LIBPROXYSQLAR) $(CLICKHOUSE_CPP_DIR)/clickhouse/libclickhouse-cpp-lib.a $(CITYHASH_DIR)/libcityhash.a $(LZ4_DIR)/liblz4.a $(MYCXXFLAGS) $(CXXFLAGS) $(LDIRS) $(LIBS) $(LDFLAGS) $(MYLIBS)
 else
 	$(CXX) -o $@ $(OBJ) $(LIBPROXYSQLAR) $(MYCXXFLAGS) $(CXXFLAGS) $(LDIRS) $(LIBS) $(LDFLAGS) $(MYLIBS)
 endif
+=======
+	$(CXX) -o $@ $(OBJ) $(LIBPROXYSQLAR) $(MYCXXFLAGS) $(CXXFLAGS) $(LDIRS) $(LIBS) $(LDFLAGS) $(MYLIBS)
+>>>>>>> origin/master
 
 $(ODIR):
 	mkdir $(ODIR)

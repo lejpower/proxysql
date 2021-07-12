@@ -17,6 +17,7 @@ DEBUG=${ALL_DEBUG}
 #export DEBUG
 #export OPTZ
 #export EXTRALINK
+<<<<<<< HEAD
 export MAKE
 export CURVER?=2.2.0
 ifneq (,$(wildcard /etc/os-release))
@@ -36,6 +37,11 @@ endif
 
 export MAKEOPT=-j ${NPROCS}
 
+=======
+CURVER?=1.3.0g
+MAKEOPT="-j 8"
+DISTRO := $(shell gawk -F= '/^NAME/{print $$2}' /etc/os-release)
+>>>>>>> origin/master
 ifeq ($(wildcard /usr/lib/systemd/system), /usr/lib/systemd/system)
 	SYSTEMD=1
 else

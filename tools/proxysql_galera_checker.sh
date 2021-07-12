@@ -49,6 +49,7 @@ NUMBER_WRITERS="${3:-0}"
 WRITER_IS_READER="${4:-1}"
 ERR_FILE="${5:-/dev/null}"
 RELOAD_CHECK_FILE="/var/lib/proxysql/reload"
+<<<<<<< HEAD
 
 # Prevent duplicate execution
 BASENAME=`basename "$0"`
@@ -58,6 +59,8 @@ if [ ${ANOTHER_PROCESS_IS_RUNNING} -eq 0 ]; then
   echo "`date` ###### Another process is already running. Abort! ######" >> ${ERR_FILE}
   exit 0
 fi
+=======
+>>>>>>> origin/master
 
 echo "0" > ${RELOAD_CHECK_FILE}
 
@@ -285,6 +288,7 @@ if [ ${NUMBER_WRITERS_ONLINE} -eq 0 ]; then
         echo "`date` Check server $hostgroup:$server:$port for only available node in DONOR state, status $stat , wsrep_local_state $WSREP_STATUS" >> ${ERR_FILE}
         if [ "${WSREP_STATUS}" = "2" -a "$stat" != "ONLINE" ] # if we are on Donor/Desync an not online in mysql_servers -> proceed
         then
+<<<<<<< HEAD
           PROXY_RUNTIME_STATUS=$($PROXYSQL_CMDLINE "SELECT status FROM runtime_mysql_servers WHERE hostname='${server}' AND port='${port}' AND hostgroup_id='${hostgroup}'")
           if [ "${PROXY_RUNTIME_STATUS}" != "ONLINE" ] # if we are not online in runtime_mysql_servers, proceed to change the server status and reload mysql_servers
           then
@@ -296,6 +300,11 @@ if [ ${NUMBER_WRITERS_ONLINE} -eq 0 ]; then
             cnt=$(( $cnt + 1 ))
             change_server_status $HOSTGROUP_WRITER_ID "$server" $port "ONLINE" "WSREP status is DESYNC/DONOR, as this is the only node we will put this one online"
           fi
+=======
+          change_server_status $HOSTGROUP_WRITER_ID "$server" $port "ONLINE" "WSREP status is DESYNC/DONOR, as this is the only node we will put this one online"
+          echo "1" > ${RELOAD_CHECK_FILE}
+          cnt=$(( $cnt + 1 ))
+>>>>>>> origin/master
         fi
         safety_cnt=$(( $safety_cnt + 1 ))
     done
@@ -317,6 +326,7 @@ if [  ${HOSTGROUP_READER_ID} -ne -1 -a ${NUMBER_READERS_ONLINE} -eq 0 ]; then
         echo "`date` Check server $hostgroup:$server:$port for only available node in DONOR state, status $stat , wsrep_local_state $WSREP_STATUS" >> ${ERR_FILE}
         if [ "${WSREP_STATUS}" = "2" -a "$stat" != "ONLINE" ] # if we are on Donor/Desync an not online in mysql_servers -> proceed
         then
+<<<<<<< HEAD
           PROXY_RUNTIME_STATUS=$($PROXYSQL_CMDLINE "SELECT status FROM runtime_mysql_servers WHERE hostname='${server}' AND port='${port}' AND hostgroup_id='${hostgroup}'")
           if [ "${PROXY_RUNTIME_STATUS}" != "ONLINE" ] # if we are not online in runtime_mysql_servers, proceed to change the server status and reload mysql_servers
           then
@@ -328,6 +338,11 @@ if [  ${HOSTGROUP_READER_ID} -ne -1 -a ${NUMBER_READERS_ONLINE} -eq 0 ]; then
             cnt=$(( $cnt + 1 ))
             change_server_status $HOSTGROUP_READER_ID "$server" $port "ONLINE" "WSREP status is DESYNC/DONOR, as this is the only node we will put this one online"
           fi
+=======
+          change_server_status $HOSTGROUP_READER_ID "$server" $port "ONLINE" "WSREP status is DESYNC/DONOR, as this is the only node we will put this one online"
+          echo "1" > ${RELOAD_CHECK_FILE}
+          cnt=$(( $cnt + 1 ))
+>>>>>>> origin/master
         fi
         safety_cnt=$(( $safety_cnt + 1 ))
     done
